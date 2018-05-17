@@ -1,0 +1,70 @@
+
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>KindEditor PHP</title>
+	<link rel="stylesheet" href="../kindeditor/themes/default/default.css" />
+	<link rel="stylesheet" href="../kindeditor/plugins/code/prettify.css" />
+	<script charset="utf-8" src="../kindeditor/kindeditor.js"></script>
+	<script charset="utf-8" src="../kindeditor/lang/zh_CN.js"></script>
+	<script charset="utf-8" src="../kindeditor/plugins/code/prettify.js"></script>
+	
+	<SCRIPT src="jquery.min.js" type="text/javascript"></SCRIPT>		 
+	<SCRIPT src="jquery.easyui.min.js" type="text/javascript"></SCRIPT>	
+	<script>
+		KindEditor.ready(function(K) {
+			var editor1 = K.create('textarea[name="content1"]', {
+				cssPath : '../kindeditor/plugins/code/prettify.css',
+				uploadJson : '../kindeditor/php/upload_json.php',
+				fileManagerJson : '../kindeditor/php/kindeditor/file_manager_json.php',
+				allowFileManager : true,
+				afterCreate : function() {
+					var self = this;
+					K.ctrl(document, 13, function() {
+						self.sync();
+						K('form[name=example]')[0].submit();
+					});
+					K.ctrl(self.edit.doc, 13, function() {
+						self.sync();
+						K('form[name=example]')[0].submit();
+					});
+				}
+			});
+			prettyPrint();
+			var editor1 = K.create('textarea[name="content1"]');
+		});
+	</script>
+</head>
+<body>
+	
+	<form id="example" name="example" method="get" action="menu/text_kindeditor.php" onsubmit="return save_text()">
+		<textarea name="content1" style="width:700px;height:390px;visibility:hidden;"></textarea>
+		
+		<br />
+	<input type="submit" name="button" value="保存" /> (提交快捷键: Ctrl + Enter)
+		<!--<button type="button" onclick="save_text()">保存</button>-->
+	</form>
+	<script>
+		function save_text(){
+			
+			$('#example').form('submit',{
+				url: 'menu/text_kindeditor.php?id='+parent.kindeditor_id,
+				onSubmit: function(){
+					
+				},
+				success: function(result){
+				console.log(result);
+					//var result = eval('('+result+')');
+					//alert("id"+result.id);
+					//alert("内容"+result.htmls);
+					alert("成功");
+				}
+			});
+			return false;
+			//alert(parent.kindeditor_id);
+		};
+	</script>
+</body>
+</html>
+

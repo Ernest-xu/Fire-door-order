@@ -1,0 +1,99 @@
+
+https://edwin.baculsoft.com/2011/12/how-to-handle-json-post-request-using-php/
+<?php
+// JSon request format is : 
+// {"userName":"654321@zzzz.com","password":"12345","emailProvider":"zzzz"}
+ 
+// read JSon input
+$data_back = json_decode(file_get_contents('php://input'));
+ 
+// set json string to php variables
+$userName = $data_back->{"userName"};
+$password = $data_back->{"password"};
+$emailProvider = $data_back->{"emailProvider"};
+ 
+// create json response
+$responses = array();
+for ($i = 0; $i < 10; $i++) {
+    $responses[] = array("name" => $i, "email" => $userName . " " . $password . " " . $emailProvider);
+}
+ 
+// JSon response format is : 
+// [{"name":"eeee","email":"eee@zzzzz.com"},
+// {"name":"aaaa","email":"aaaaa@zzzzz.com"},{"name":"cccc","email":"bbb@zzzzz.com"}]
+ 
+// set header as json
+header("Content-type: application/json");
+ 
+// send response
+echo json_encode($responses);
+?>
+
+-------------------------------------
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST')
+{
+  $data = json_decode(file_get_contents("php://input"));
+  print_r($data);
+echo $data["operacion"];
+}
+
+---------------------------------------------------
+<?php
+
+$data = '{
+	"name": "Aragorn",
+	"race": "Human"
+}';
+
+$character = json_decode($data);
+echo $character->name;
+
+good
+https://www.taniarascia.com/how-to-use-json-data-with-php-or-javascript/
+
+-------------------------------------------------------------------------
+
+http://www.jeasyui.com/demo/main/index.php?plugin=TreeGrid&theme=material&dir=ltr&pitem=&sort=
+
+https://stackoverflow.com/questions/12835611/jquery-easy-ui-treegrid-checkbox
+
+http://www.jeasyui.com/demo/main/index.php?plugin=TreeGrid&theme=material&dir=ltr&pitem=&sort=
+
+
+
+
+
+
+
+https://stackoverflow.com/questions/13663332/jquery-easyui-data-grid-save-changes-into-database
+
+
+Jquery EasyUI data grid save changes into database
+
+var rows = $('#dg').datagrid('getRows');
+$.each(rows, function(i, row) {
+  $('#dg').datagrid('endEdit', i);
+  var url = row.isNewRecord ? 'test.php?savetest=true' : 'test.php?updatetest=true';
+  $.ajax(url, {
+      type:'POST',
+      dataType: 'json',
+      data:row
+  });
+});
+
+
+
+
+
+
+
+https://www.jeasyui.com/tutorial/app/crud.php
+
+
+
+
+
+
+
+
